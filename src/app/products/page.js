@@ -45,17 +45,36 @@ export default function Products() {
   const websiteLink = `${storeUrl}/?ref=${encodeURIComponent(referralCode)}`;
 
   async function copyLink(link, key) {
-    if (!referralCode) {
+    let copyUrl = link;
+    let code = referralCode;
+    if (!code) {
+      const token = localStorage.getItem('affiliateToken');
+      if (token) {
+        try {
+          const response = await fetch(`${apiUrl}/affiliate/me`, { headers: { Authorization: `Bearer ${token}` } });
+          const data = response.ok ? await response.json() : null;
+          if (data?.affiliate?.code) {
+            code = data.affiliate.code;
+            setAffiliate(data.affiliate);
+            localStorage.setItem('affiliateProfile', JSON.stringify(data.affiliate));
+            const url = new URL(link);
+            url.searchParams.set('ref', code);
+            copyUrl = url.toString();
+          }
+        } catch {}
+      }
+    }
+    if (!code) {
       setError('Affiliate code পাওয়া যায়নি। আবার login করুন।');
       return;
     }
     try {
       try {
         if (!navigator.clipboard?.writeText) throw new Error('Clipboard API unavailable');
-        await navigator.clipboard.writeText(link);
+        await navigator.clipboard.writeText(copyUrl);
       } catch {
         const input = document.createElement('textarea');
-        input.value = link;
+        input.value = copyUrl;
         input.setAttribute('readonly', '');
         input.style.position = 'fixed';
         input.style.opacity = '0';
