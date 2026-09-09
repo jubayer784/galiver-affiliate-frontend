@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://api.galiver.shop/api/v1';
 const initialCounts = { total: 0, pending: 0, canceled: 0, returned: 0 };
 const dateValue = date => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 const getDateRange = preset => { const today = new Date(); const start = new Date(today); const end = new Date(today); const day = today.getDay(); if (preset === 'today') return { from: dateValue(start), to: dateValue(end) }; if (preset === 'yesterday') { start.setDate(start.getDate() - 1); end.setDate(end.getDate() - 1); } else if (preset === 'this-week') start.setDate(start.getDate() - (day === 0 ? 6 : day - 1)); else if (preset === 'last-week') { start.setDate(start.getDate() - (day === 0 ? 13 : day + 6)); end.setDate(end.getDate() - (day === 0 ? 7 : day)); } else if (preset === 'this-month') start.setDate(1); else if (preset === 'last-month') { start.setMonth(start.getMonth() - 1, 1); end.setDate(0); } return { from: dateValue(start), to: dateValue(end) }; };

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://api.galiver.shop/api/v1';
 
 export default function Login(){
   const router = useRouter(); const [form,setForm]=useState({identifier:'',password:''}); const [error,setError]=useState(''); const [loading,setLoading]=useState(false);

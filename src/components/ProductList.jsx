@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://api.galiver.shop/api/v1';
 const storeUrl = process.env.NEXT_PUBLIC_STORE_URL || 'https://galiver.shop';
 
 export default function ProductList(){

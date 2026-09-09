@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://api.galiver.shop/api/v1';
 const demoProducts = [
   { _id: 'demo-1', title: 'Premium Cotton T-Shirt', imageUrl: 'https://placehold.co/120x120/f7d9c9/17231d?text=T-Shirt' },
   { _id: 'demo-2', title: 'Classic Leather Wallet', imageUrl: 'https://placehold.co/120x120/e8dfd2/17231d?text=Wallet' },

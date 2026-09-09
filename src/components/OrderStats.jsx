@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://api.galiver.shop/api/v1';
 const cards = [
   { key: 'total', label: 'Total Order', icon: 'shopping_bag', color: '#e35d38' },
   { key: 'delivered', label: 'Total Delivered', icon: 'task_alt', color: '#20815a' },
