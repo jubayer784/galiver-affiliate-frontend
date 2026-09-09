@@ -1,0 +1,3 @@
+export const metadata = { title: 'Frequently Asked Questions' };
+const items=[['When is commission credited?','After the order is marked Delivered by Galiver.'],['How long does attribution last?','The referral cookie lasts 30 days unless a newer valid referral replaces it.'],['What is the commission rate?','The current standard rate is 10% of product value, excluding delivery charges.']];
+export default function FAQ(){return <main className="shell"><h1>Frequently Asked Questions</h1>{items.map(([q,a])=><section className="panel" key={q}><h2>{q}</h2><p className="muted">{a}</p></section>)}</main>}
