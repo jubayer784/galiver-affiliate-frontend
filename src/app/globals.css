@@ -1,3 +1,4 @@
+.password-toggle{display:grid;place-items:center;height:100%;padding:0 10px;border:0;background:transparent;color:#746d78;cursor:pointer}.password-toggle:focus-visible{outline:2px solid #e35d38;outline-offset:-2px}
 .admin-logo-wrap{background:#fff1e8!important}.brand-lockup:before,.auth-logo:before{background-color:#fff1e8}
 .auth-logo:has(.admin-logo):before{display:none}
 .brand-lockup:before,.auth-logo:before{content:'';display:block;width:148px;height:42px;border-radius:7px;background:#fff1e8 url('https://galiver.shop/banner/galiverwhitelogo.png') center/124px 30px no-repeat;filter:none}.brand-lockup:before{margin-right:0}.brand-lockup>.brand-mark,.brand-lockup>span:not(.brand-mark),.auth-logo>.auth-logo-mark,.auth-logo>strong{display:none}.admin-logo{filter:brightness(0) saturate(100%) invert(45%) sepia(97%) saturate(2566%) hue-rotate(2deg) brightness(102%) contrast(104%)}

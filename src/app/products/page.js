@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import UiIcon from '../../components/UiIcon';
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://api.galiver.shop/api/v1';
 const storeUrl = process.env.NEXT_PUBLIC_STORE_URL || 'https://galiver.shop';
@@ -96,7 +97,7 @@ export default function Products() {
     <style>{`.products-grid{display:grid;grid-template-columns:1fr;gap:10px}.product-card{display:flex;align-items:center;min-height:76px}.product-image{width:76px;flex:0 0 76px;aspect-ratio:1/1}.product-card-content{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:3px 12px;flex:1;padding:10px 12px}.product-title{font-size:13px;grid-column:1/-1}.product-price{margin:0;font-size:15px}.product-commission{margin:0;font-size:11px}.product-link{grid-column:2;grid-row:2;padding:8px 10px;font-size:10px;white-space:nowrap}@media(max-width:600px){.product-image{width:64px;flex-basis:64px}.product-card-content{padding:8px 10px;gap:2px 8px}.product-title{font-size:12px}.product-price{font-size:14px}.product-commission{font-size:10px}.product-link{padding:7px 8px;font-size:10px}}`}</style>
     <style>{`.copy-notice{position:fixed;top:18px;right:18px;z-index:20;padding:9px 13px;border-radius:6px;background:#20815a;color:#fff;font:700 12px Arial,sans-serif;box-shadow:0 5px 18px rgba(23,35,29,.18)}`}</style>
     <h1 className="products-heading">All Products</h1>
-    <div className="products-toolbar"><span className="material-symbols search-icon">search</span><input className="products-search" value={search} onChange={event => setSearch(event.target.value)} placeholder="Search products" aria-label="Search products" /></div>
+    <div className="products-toolbar"><UiIcon name="search" size={20} /><input className="products-search" value={search} onChange={event => setSearch(event.target.value)} placeholder="Search products" aria-label="Search products" /></div>
     <div className="website-link-box"><span className="website-link-url">{websiteLink}</span><button className="website-link-copy" type="button" onClick={() => copyLink(websiteLink, 'website')}>{copied === 'website' ? 'Link Copied' : 'Copy Website Link'}</button></div>
     {error && <div className="products-error">{error}</div>}
     {copyNotice && <div className="copy-notice" role="status">{copyNotice}</div>}
