@@ -45,11 +45,28 @@ export default function Products() {
 
   async function copyLink(link, key) {
     if (!referralCode) return;
-    try { await navigator.clipboard.writeText(link); setCopied(key); setTimeout(() => setCopied(''), 1800); } catch { setError('Link copy করা যায়নি।'); }
+    try {
+      if (navigator.clipboard?.writeText) await navigator.clipboard.writeText(link);
+      else {
+        const input = document.createElement('textarea');
+        input.value = link;
+        input.setAttribute('readonly', '');
+        input.style.position = 'fixed';
+        input.style.opacity = '0';
+        document.body.appendChild(input);
+        input.select();
+        if (!document.execCommand('copy')) throw new Error('Copy failed');
+        input.remove();
+      }
+      setError('');
+      setCopied(key);
+      setTimeout(() => setCopied(''), 1800);
+    } catch { setError('Link copy করা যায়নি।'); }
   }
 
   return <main className="products-page shell">
     <style>{`.products-page{padding-bottom:120px}.products-heading{margin:20px 0 16px;color:#17231d;font:700 30px Arial,sans-serif}.products-toolbar{display:flex;align-items:center;gap:12px;margin-bottom:18px}.products-search{flex:1;height:44px;padding:0 14px;border:1px solid #dfe5dc;border-radius:7px;background:#fff;color:#17231d;font:14px Arial,sans-serif;outline:0}.products-search:focus{border-color:#e35d38;box-shadow:0 0 0 3px rgba(227,93,56,.12)}.search-icon{font-size:22px}.website-link-box{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:22px;padding:15px 16px;border:1px solid #dfe5dc;border-radius:8px;background:#fff}.website-link-url{min-width:0;overflow:hidden;color:#64716b;font:12px Arial,sans-serif;text-overflow:ellipsis;white-space:nowrap}.website-link-copy{flex:0 0 auto;padding:10px 13px;border:0;border-radius:6px;background:#e35d38;color:#fff;font:700 12px Arial,sans-serif;cursor:pointer}.products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.product-card{overflow:hidden;border:1px solid #dfe5dc;border-radius:8px;background:#fff}.product-image{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;background:#eef1eb}.product-card-content{padding:15px}.product-title{display:block;overflow:hidden;color:#17231d;font:700 16px Arial,sans-serif;text-overflow:ellipsis;white-space:nowrap}.product-price{margin:8px 0 4px;color:#e35d38;font:700 18px Arial,sans-serif}.product-commission{display:block;margin-bottom:14px;color:#20815a;font:700 13px Arial,sans-serif}.product-link{width:100%;padding:11px;border:0;border-radius:6px;background:#17231d;color:#fff;font:700 12px Arial,sans-serif;cursor:pointer}.products-error{padding:14px;border-radius:6px;background:#fff0ef;color:#b33b3b;font:13px Arial,sans-serif}@media(max-width:850px){.products-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:600px){.products-heading{font-size:25px}.products-toolbar{gap:7px}.website-link-box{display:block}.website-link-copy{width:100%;margin-top:10px}.products-grid{grid-template-columns:1fr;gap:12px}.product-card{display:grid;grid-template-columns:110px 1fr}.product-image{height:100%;aspect-ratio:auto}.product-card-content{display:flex;flex-direction:column;justify-content:center}.product-price{margin:7px 0 4px}}`}</style>
+    <style>{`.products-grid{grid-template-columns:repeat(4,1fr);gap:12px}.product-card-content{padding:10px}.product-title{font-size:13px}.product-price{margin:5px 0 3px;font-size:15px}.product-commission{margin-bottom:9px;font-size:11px}.product-link{padding:8px 6px;font-size:10px}@media(max-width:1000px){.products-grid{grid-template-columns:repeat(3,1fr)}}@media(max-width:850px){.products-grid{grid-template-columns:repeat(2,1fr);gap:10px}}@media(max-width:600px){.products-grid{gap:8px}.product-card-content{padding:8px}.product-title{font-size:12px}.product-price{font-size:14px}.product-commission{font-size:10px}.product-link{padding:7px 4px;font-size:10px}}`}</style>
     <h1 className="products-heading">All Products</h1>
     <div className="products-toolbar"><span className="material-symbols search-icon">search</span><input className="products-search" value={search} onChange={event => setSearch(event.target.value)} placeholder="Search products" aria-label="Search products" /></div>
     <div className="website-link-box"><span className="website-link-url">{websiteLink}</span><button className="website-link-copy" type="button" onClick={() => copyLink(websiteLink, 'website')}>{copied === 'website' ? 'Link Copied' : 'Copy Website Link'}</button></div>
