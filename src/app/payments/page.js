@@ -3,6 +3,11 @@
 import { useEffect, useState } from 'react';
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://api.galiver.shop/api/v1';
+const demoPaymentRequests = [
+  { _id: 'demo-payment-1', amount: 50, method: 'bKash - 01700000000', createdAt: '2026-09-08T10:30:00.000Z', status: 'pending' },
+  { _id: 'demo-payment-2', amount: 120, method: 'Nagad - 01800000000', createdAt: '2026-09-05T14:15:00.000Z', status: 'paid' },
+  { _id: 'demo-payment-3', amount: 75, method: 'bKash - 01700000000', createdAt: '2026-08-29T09:00:00.000Z', status: 'rejected' },
+];
 
 export default function Payments() {
   const [requests, setRequests] = useState([]);
@@ -13,7 +18,11 @@ export default function Payments() {
     const token = localStorage.getItem('affiliateToken');
     fetch(`${apiUrl}/affiliate/payment-requests`, { headers: { Authorization: `Bearer ${token || ''}` } })
       .then(async response => { if (!response.ok) throw new Error('Payment history load করা যায়নি।'); return response.json(); })
-      .then(data => setRequests(data.requests || []))
+      .then(data => {
+        const savedProfile = JSON.parse(localStorage.getItem('affiliateProfile') || 'null');
+        const apiRequests = data.requests || [];
+        setRequests(apiRequests.length ? apiRequests : savedProfile?.email === 'admin@galiver.test' ? demoPaymentRequests : []);
+      })
       .catch(loadError => { setError(loadError.message); setRequests([]); })
       .finally(() => setLoading(false));
   }, []);

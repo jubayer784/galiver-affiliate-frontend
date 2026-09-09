@@ -3,25 +3,17 @@
 import { useEffect, useState } from 'react';
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://api.galiver.shop/api/v1';
-const demoProducts = [
-  { _id: 'demo-1', title: 'Premium Cotton T-Shirt', imageUrl: 'https://placehold.co/120x120/f7d9c9/17231d?text=T-Shirt' },
-  { _id: 'demo-2', title: 'Classic Leather Wallet', imageUrl: 'https://placehold.co/120x120/e8dfd2/17231d?text=Wallet' },
-  { _id: 'demo-3', title: 'Wireless Bluetooth Earbuds', imageUrl: 'https://placehold.co/120x120/d9e7f2/17231d?text=Earbuds' },
-  { _id: 'demo-4', title: 'Everyday Canvas Backpack', imageUrl: 'https://placehold.co/120x120/dce8d8/17231d?text=Bag' },
-  { _id: 'demo-5', title: 'Minimal Desk Lamp', imageUrl: 'https://placehold.co/120x120/f1e4b8/17231d?text=Lamp' },
-  { _id: 'demo-6', title: 'Smart Fitness Watch', imageUrl: 'https://placehold.co/120x120/ded8ed/17231d?text=Watch' },
-];
 
 export default function TopSellingProducts() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     const token = localStorage.getItem('affiliateToken');
-    if (!token) { setProducts(demoProducts); return; }
+    if (!token) return;
     fetch(`${apiUrl}/affiliate/top-products`, { headers: { Authorization: `Bearer ${token}` } })
       .then(response => response.ok ? response.json() : null)
-      .then(data => { setProducts(data?.products?.length ? data.products : demoProducts); })
-      .catch(() => setProducts(demoProducts));
+      .then(data => { setProducts(data?.products || []); })
+      .catch(() => setProducts([]));
   }, []);
 
   return (

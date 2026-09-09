@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://api.galiver.shop/api/v1';
+const demoPaymentMethods = ['bKash - 01700000000', 'Nagad - 01800000000'];
 const dateValue = date => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 const getDateRange = preset => { const today = new Date(); const start = new Date(today); const end = new Date(today); const day = today.getDay(); if (preset === 'today') return { from: dateValue(start), to: dateValue(end) }; if (preset === 'yesterday') { start.setDate(start.getDate() - 1); end.setDate(end.getDate() - 1); } else if (preset === 'this-week') start.setDate(start.getDate() - (day === 0 ? 6 : day - 1)); else if (preset === 'last-week') { start.setDate(start.getDate() - (day === 0 ? 13 : day + 6)); end.setDate(end.getDate() - (day === 0 ? 7 : day)); } else if (preset === 'this-month') start.setDate(1); else if (preset === 'last-month') { start.setMonth(start.getMonth() - 1, 1); end.setDate(0); } return { from: dateValue(start), to: dateValue(end) }; };
 const datePresets = [['today', 'Today'], ['yesterday', 'Yesterday'], ['this-week', 'This Week'], ['last-week', 'Last Week'], ['this-month', 'This Month'], ['last-month', 'Last Month']];
@@ -23,7 +24,7 @@ export default function Earnings() {
 
   useEffect(() => {
     const token = localStorage.getItem('affiliateToken');
-    fetch(`${apiUrl}/affiliate/me`, { headers: { Authorization: `Bearer ${token || ''}` } }).then(response => response.ok ? response.json() : null).then(data => { setBalance(Number(data?.affiliate?.walletBalance || 0)); const methods = data?.affiliate?.paymentMethods || []; setPaymentMethods(methods); setRequestForm({ method: methods[0] || '' }); }).catch(() => {});
+    fetch(`${apiUrl}/affiliate/me`, { headers: { Authorization: `Bearer ${token || ''}` } }).then(response => response.ok ? response.json() : null).then(data => { setBalance(Number(data?.affiliate?.walletBalance || 0)); const methods = data?.affiliate?.paymentMethods || []; const visibleMethods = methods.length ? methods : data?.affiliate?.email === 'admin@galiver.test' ? demoPaymentMethods : []; setPaymentMethods(visibleMethods); setRequestForm({ method: visibleMethods[0] || '' }); }).catch(() => {});
     const query = new URLSearchParams({ from, to });
     fetch(`${apiUrl}/affiliate/commissions?${query}`, { headers: { Authorization: `Bearer ${token || ''}` } })
       .then(async response => { if (!response.ok) throw new Error('Earnings load করা যায়নি।'); return response.json(); })
