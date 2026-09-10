@@ -1,1 +1,13 @@
-export default function robots(){const base=process.env.NEXT_PUBLIC_SITE_URL||'https://affiliate.galiver.shop';return {rules:{userAgent:'*',allow:'/'},sitemap:`${base}/sitemap.xml`}}
+const base = process.env.NEXT_PUBLIC_SITE_URL || 'https://affiliate.galiver.shop';
+
+export default function robots() {
+  return {
+    rules: {
+      userAgent: '*',
+      allow: '/',
+      disallow: ['/dashboard', '/earnings', '/payments', '/orders', '/products', '/profile', '/login', '/signup'],
+    },
+    sitemap: `${base}/sitemap.xml`,
+    host: base,
+  };
+}

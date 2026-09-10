@@ -6,14 +6,20 @@ import { useEffect, useState } from 'react';
 import DashboardNav from './DashboardNav';
 import DashboardBottomNav from './DashboardBottomNav';
 
+const AUTH_ROUTES = ['/dashboard', '/earnings', '/payments', '/orders', '/products', '/profile'];
+const CHROME_ROUTES = [...AUTH_ROUTES, '/support'];
+
+const matches = (pathname, routes) => routes.some(route => pathname === route || pathname.startsWith(`${route}/`));
+
 export default function PortalChrome({ children }) {
   const pathname = usePathname();
   const router = useRouter();
-  const isPortalPage = ['/dashboard', '/earnings', '/payments', '/orders', '/products', '/support', '/profile'].some(route => pathname === route || pathname.startsWith(`${route}/`));
-  const [authorized, setAuthorized] = useState(!isPortalPage);
+  const needsAuth = matches(pathname, AUTH_ROUTES);
+  const hasChrome = matches(pathname, CHROME_ROUTES);
+  const [authorized, setAuthorized] = useState(!needsAuth);
 
   useEffect(() => {
-    if (!isPortalPage) {
+    if (!needsAuth) {
       setAuthorized(true);
       return undefined;
     }
@@ -27,18 +33,16 @@ export default function PortalChrome({ children }) {
     checkAuth();
     window.addEventListener('pageshow', checkAuth);
     return () => window.removeEventListener('pageshow', checkAuth);
-  }, [isPortalPage, router]);
+  }, [needsAuth, router]);
 
-  if (!isPortalPage || authorized) {
-    if (!isPortalPage) return children;
-    return (
-      <>
-        <DashboardNav />
-        {children}
-        <DashboardBottomNav />
-      </>
-    );
-  }
+  if (needsAuth && !authorized) return null;
+  if (!hasChrome) return children;
 
-  return null;
+  return (
+    <>
+      <DashboardNav />
+      {children}
+      <DashboardBottomNav />
+    </>
+  );
 }

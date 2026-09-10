@@ -1,8 +1,17 @@
 import Link from 'next/link';
 
+const storeUrl = process.env.NEXT_PUBLIC_STORE_URL || 'https://galiver.shop';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://affiliate.galiver.shop';
+
 export const metadata = {
   title: 'অ্যাফিলিয়েট হিসেবে আয় করুন',
-  description: 'Galiver-এর প্রোডাক্ট শেয়ার করে প্রতি সফল অর্ডারে কমিশন আয় করুন।',
+  description: 'Galiver-এর প্রোডাক্ট শেয়ার করে প্রতি সফল অর্ডারে ১০% কমিশন আয় করুন। ফ্রি সাইনআপ, সহজ লিংক শেয়ারিং এবং ডেলিভারির পর পেমেন্ট।',
+  alternates: { canonical: '/' },
+  openGraph: {
+    title: 'অ্যাফিলিয়েট হিসেবে আয় করুন | Galiver Affiliates',
+    description: 'Galiver-এর প্রোডাক্ট শেয়ার করে প্রতি সফল অর্ডারে ১০% কমিশন আয় করুন।',
+    url: siteUrl,
+  },
 };
 
 const steps = [
@@ -14,10 +23,25 @@ const steps = [
 export default function Home() {
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: 'Galiver Affiliates',
-    url: 'https://affiliate.galiver.shop',
-    description: 'Galiver affiliate programme',
+    '@graph': [
+      {
+        '@type': 'Organization',
+        '@id': `${siteUrl}/#organization`,
+        name: 'Galiver Affiliates',
+        url: siteUrl,
+        logo: `${storeUrl}/logo.png`,
+        description: 'Galiver-এর অফিসিয়াল অ্যাফিলিয়েট প্রোগ্রাম — প্রোডাক্ট শেয়ার করে প্রতি সফল অর্ডারে ১০% কমিশন।',
+        parentOrganization: { '@type': 'Organization', name: 'Galiver', url: storeUrl },
+      },
+      {
+        '@type': 'WebSite',
+        '@id': `${siteUrl}/#website`,
+        url: siteUrl,
+        name: 'Galiver Affiliates',
+        inLanguage: 'bn-BD',
+        publisher: { '@id': `${siteUrl}/#organization` },
+      },
+    ],
   };
 
   return <main className="affiliate-app">

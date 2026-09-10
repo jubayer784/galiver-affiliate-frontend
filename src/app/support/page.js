@@ -1,6 +1,10 @@
 import UiIcon from '../../components/UiIcon';
 
-export const metadata = { title: 'Support' };
+export const metadata = {
+  title: 'Support',
+  description: 'Galiver অ্যাফিলিয়েট প্রোগ্রাম নিয়ে প্রশ্ন থাকলে WhatsApp বা ফোনে আমাদের সাপোর্ট টিমের সাথে যোগাযোগ করুন।',
+  alternates: { canonical: '/support' },
+};
 
 const whatsappUrl = 'https://api.whatsapp.com/message/AVBOP5UOAJE6F1?autoload=1&app_absent=0';
 
