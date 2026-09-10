@@ -21,7 +21,7 @@ export default function Signup() {
     if (form.password.length < 8) return setError('পাসওয়ার্ড কমপক্ষে ৮ অক্ষরের হতে হবে');
     setLoading(true);
     try {
-      const response = await fetch(`${apiUrl}/affiliate/signup-otp`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: form.email, name: form.name }) });
+      const response = await fetch(`${apiUrl}/affiliate/signup-otp`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: form.email, phone: form.phone, name: form.name }) });
       const data = await response.json();
       if (!response.ok) throw new Error(data.message || 'OTP request failed');
       sessionStorage.setItem('affiliateSignup', JSON.stringify({ name: form.name, email: form.email, phone: form.phone, password: form.password }));
