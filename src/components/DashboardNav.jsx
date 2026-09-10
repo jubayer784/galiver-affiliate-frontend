@@ -3,9 +3,12 @@
 import { useEffect, useState } from 'react';
 import UiIcon from './UiIcon';
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://api.galiver.shop/api/v1';
+
 export default function DashboardNav() {
   const [balance, setBalance] = useState(0);
   const [profile, setProfile] = useState(null);
+  const [unread, setUnread] = useState(0);
 
   useEffect(() => {
     try {
@@ -18,13 +21,27 @@ export default function DashboardNav() {
     }
   }, []);
 
+  useEffect(() => {
+    const token = localStorage.getItem('affiliateToken') || '';
+    if (!token) return undefined;
+    const loadUnread = () => fetch(`${apiUrl}/affiliate/notifications/unread`, { headers: { Authorization: `Bearer ${token}` } })
+      .then(response => (response.ok ? response.json() : null))
+      .then(data => { if (data) setUnread(Number(data.unread || 0)); })
+      .catch(() => {});
+    loadUnread();
+    const clear = () => setUnread(0);
+    window.addEventListener('affiliate-notifications-read', clear);
+    window.addEventListener('focus', loadUnread);
+    return () => { window.removeEventListener('affiliate-notifications-read', clear); window.removeEventListener('focus', loadUnread); };
+  }, []);
+
   const name = profile?.name || 'Affiliate';
   const initials = name.trim().split(/\s+/).slice(0, 2).map(part => part[0]).join('').toUpperCase();
   const image = profile?.profileImage || profile?.avatar || profile?.image;
 
   return (
     <>
-      <style>{`.dashboard-nav{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;min-height:68px;padding:12px max(18px,calc((100% - 1112px)/2));margin:0 0 24px;background:#e35d38;color:#fff}.dashboard-brand{display:flex;align-items:center;gap:10px;font:700 22px/1 Arial,sans-serif;color:#fff}.dashboard-brand-logo{width:104px;height:auto;display:block;object-fit:contain}.dashboard-brand-fallback{display:none;color:#fff;font:700 22px Arial,sans-serif}.dashboard-balance{position:absolute;left:50%;transform:translateX(-50%);padding:8px 16px;border-radius:999px;background:#fff;color:#17231d;text-align:center;white-space:nowrap;box-shadow:0 3px 10px rgba(112,45,20,.16)}.dashboard-balance-value{display:block;color:#17231d;font:700 17px Arial,sans-serif}.dashboard-actions{display:flex;align-items:center;gap:9px}.dashboard-notification{position:relative;display:grid;place-items:center;width:40px;height:40px;border:1px solid rgba(255,255,255,.45);border-radius:50%;background:rgba(255,255,255,.16);color:#fff;cursor:pointer}.dashboard-notification-icon{font-size:25px;font-weight:700;line-height:1}.dashboard-notification-dot{position:absolute;top:8px;right:9px;width:7px;height:7px;border:2px solid #e35d38;border-radius:50%;background:#fff}.dashboard-profile-avatar{width:40px;height:40px;border:2px solid #fff;border-radius:50%;object-fit:cover}.dashboard-profile-fallback{display:grid;place-items:center;background:#17231d;color:#fff;font:700 12px Arial,sans-serif}@media(max-width:600px){.dashboard-nav{min-height:62px;padding:10px 12px;margin:0 0 18px}.dashboard-brand-logo{width:86px}.dashboard-brand-fallback{font-size:18px}.dashboard-balance{padding:7px 10px}.dashboard-balance-value{font-size:15px}.dashboard-notification{width:36px;height:36px}.dashboard-notification-icon{font-size:23px}.dashboard-profile-avatar{width:36px;height:36px}}`}</style>
+      <style>{`.dashboard-nav{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;min-height:68px;padding:12px max(18px,calc((100% - 1112px)/2));margin:0 0 24px;background:#e35d38;color:#fff}.dashboard-brand{display:flex;align-items:center;gap:10px;font:700 22px/1 Arial,sans-serif;color:#fff}.dashboard-brand-logo{width:104px;height:auto;display:block;object-fit:contain}.dashboard-brand-fallback{display:none;color:#fff;font:700 22px Arial,sans-serif}.dashboard-balance{position:absolute;left:50%;transform:translateX(-50%);padding:8px 16px;border-radius:999px;background:#fff;color:#17231d;text-align:center;white-space:nowrap;box-shadow:0 3px 10px rgba(112,45,20,.16)}.dashboard-balance-value{display:block;color:#17231d;font:700 17px Arial,sans-serif}.dashboard-actions{display:flex;align-items:center;gap:9px}.dashboard-notification{position:relative;display:grid;place-items:center;width:40px;height:40px;border:1px solid rgba(255,255,255,.45);border-radius:50%;background:rgba(255,255,255,.16);color:#fff;cursor:pointer}.dashboard-notification-icon{font-size:25px;font-weight:700;line-height:1}.dashboard-notification-badge{position:absolute;top:-3px;right:-3px;min-width:17px;height:17px;padding:0 4px;display:grid;place-items:center;border:2px solid #e35d38;border-radius:999px;background:#fff;color:#e35d38;font:700 10px/1 Arial,sans-serif}.dashboard-profile-avatar{width:40px;height:40px;border:2px solid #fff;border-radius:50%;object-fit:cover}.dashboard-profile-fallback{display:grid;place-items:center;background:#17231d;color:#fff;font:700 12px Arial,sans-serif}@media(min-width:700px){.dashboard-nav{padding-left:22px}}@media(max-width:600px){.dashboard-nav{min-height:62px;padding:10px 12px;margin:0 0 18px}.dashboard-brand-logo{width:86px}.dashboard-brand-fallback{font-size:18px}.dashboard-balance{padding:7px 10px}.dashboard-balance-value{font-size:15px}.dashboard-notification{width:36px;height:36px}.dashboard-notification-icon{font-size:23px}.dashboard-profile-avatar{width:36px;height:36px}}`}</style>
       <nav className="dashboard-nav">
       <a className="dashboard-brand" href="/dashboard" aria-label="Galiver affiliates dashboard">
         <img className="dashboard-brand-logo" src="https://galiver.shop/banner/galiverwhitelogo.png" alt="Galiver" onError={event => { event.currentTarget.style.display = 'none'; event.currentTarget.nextElementSibling.style.display = 'block'; }} />
@@ -34,10 +51,10 @@ export default function DashboardNav() {
         <span className="dashboard-balance-value">৳ {balance.toLocaleString('en-BD', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
       </div>
       <div className="dashboard-actions">
-        <button className="dashboard-notification" type="button" aria-label="Notifications">
+        <a className="dashboard-notification" href="/notifications" aria-label={unread > 0 ? `Notifications, ${unread} unread` : 'Notifications'}>
           <span className="dashboard-notification-icon"><UiIcon name="bell" size={19} /></span>
-          <span className="dashboard-notification-dot" aria-hidden="true" />
-        </button>
+          {unread > 0 && <span className="dashboard-notification-badge" aria-hidden="true">{unread > 9 ? '9+' : unread}</span>}
+        </a>
         <a href="/profile" aria-label="Open profile">{image ? <img className="dashboard-profile-avatar" src={image} alt={name} /> : <span className="dashboard-profile-avatar dashboard-profile-fallback" aria-label={name}>{initials}</span>}</a>
       </div>
       </nav>

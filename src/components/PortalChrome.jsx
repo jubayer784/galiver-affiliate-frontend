@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import DashboardNav from './DashboardNav';
 import DashboardBottomNav from './DashboardBottomNav';
 
-const AUTH_ROUTES = ['/dashboard', '/earnings', '/payments', '/orders', '/products', '/profile'];
+const AUTH_ROUTES = ['/dashboard', '/earnings', '/payments', '/orders', '/products', '/profile', '/notifications'];
 const CHROME_ROUTES = [...AUTH_ROUTES, '/support'];
 
 const matches = (pathname, routes) => routes.some(route => pathname === route || pathname.startsWith(`${route}/`));
@@ -41,7 +41,7 @@ export default function PortalChrome({ children }) {
   return (
     <>
       <DashboardNav />
-      {children}
+      <div className="portal-body">{children}</div>
       <DashboardBottomNav />
     </>
   );
