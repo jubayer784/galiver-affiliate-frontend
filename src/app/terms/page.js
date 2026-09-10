@@ -5,5 +5,5 @@ export const metadata = {
 };
 
 export default function Terms() {
-  return <main className="shell"><h1>Terms and Conditions</h1><p className="muted">Affiliates receive 10% of eligible product value after an attributed order is delivered. Cancelled, returned, fraudulent, or self-referred orders are not eligible. Galiver may review or suspend accounts that misuse referral links.</p></main>;
+  return <main className="shell"><h1>Terms and Conditions</h1><p className="muted">Affiliates receive up to 30% of eligible product value after an attributed order is delivered. Cancelled, returned, fraudulent, or self-referred orders are not eligible. Galiver may review or suspend accounts that misuse referral links.</p></main>;
 }

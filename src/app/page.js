@@ -6,12 +6,13 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://affiliate.galiver.s
 
 export const metadata = {
   title: 'অ্যাফিলিয়েট হিসেবে আয় করুন',
-  description: 'Galiver-এর প্রোডাক্ট শেয়ার করে প্রতি সফল অর্ডারে ১০% কমিশন আয় করুন। ফ্রি সাইনআপ, সহজ লিংক শেয়ারিং এবং ডেলিভারির পর পেমেন্ট।',
+  description: 'Galiver-এর প্রোডাক্ট শেয়ার করে প্রতি সফল অর্ডারে ৩০% পর্যন্ত কমিশন আয় করুন। ফ্রি সাইনআপ, সহজ লিংক শেয়ারিং এবং ডেলিভারির পর পেমেন্ট।',
   alternates: { canonical: '/' },
   openGraph: {
     title: 'অ্যাফিলিয়েট হিসেবে আয় করুন | Galiver Affiliates',
-    description: 'Galiver-এর প্রোডাক্ট শেয়ার করে প্রতি সফল অর্ডারে ১০% কমিশন আয় করুন।',
+    description: 'Galiver-এর প্রোডাক্ট শেয়ার করে প্রতি সফল অর্ডারে ৩০% পর্যন্ত কমিশন আয় করুন।',
     url: siteUrl,
+    images: [{ url: '/hero-banner.png', width: 1024, height: 572, alt: 'Galiver Affiliates — ৩০% পর্যন্ত কমিশন আয় করুন' }],
   },
 };
 
@@ -31,7 +32,7 @@ export default function Home() {
         name: 'Galiver Affiliates',
         url: siteUrl,
         logo: `${storeUrl}/logo.png`,
-        description: 'Galiver-এর অফিসিয়াল অ্যাফিলিয়েট প্রোগ্রাম — প্রোডাক্ট শেয়ার করে প্রতি সফল অর্ডারে ১০% কমিশন।',
+        description: 'Galiver-এর অফিসিয়াল অ্যাফিলিয়েট প্রোগ্রাম — প্রোডাক্ট শেয়ার করে প্রতি সফল অর্ডারে ৩০% পর্যন্ত কমিশন।',
         parentOrganization: { '@type': 'Organization', name: 'Galiver', url: storeUrl },
       },
       {

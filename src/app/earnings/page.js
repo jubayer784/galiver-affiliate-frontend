@@ -59,6 +59,11 @@ export default function Earnings() {
     const data = await response.json();
     if (!response.ok) { setRequestMessage(data.message || 'Payment request পাঠানো যায়নি।'); return; }
     setRequestMessage('Payment request পাঠানো হয়েছে।');
+    setBalance(Number(data.walletBalance ?? 0));
+    try {
+      const savedProfile = JSON.parse(localStorage.getItem('affiliateProfile') || 'null');
+      if (savedProfile) localStorage.setItem('affiliateProfile', JSON.stringify({ ...savedProfile, walletBalance: Number(data.walletBalance ?? 0) }));
+    } catch {}
     setRequestForm({ method: paymentMethods[0] || '' });
     setRequestOpen(false);
   }

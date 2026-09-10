@@ -4,8 +4,9 @@ import PortalChrome from '@/components/PortalChrome';
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://affiliate.galiver.shop';
 const storeUrl = process.env.NEXT_PUBLIC_STORE_URL || 'https://galiver.shop';
 
-const title = 'Galiver Affiliates - প্রোডাক্ট শেয়ার করে কমিশন আয় করুন';
-const description = 'Galiver অ্যাফিলিয়েট প্রোগ্রামে ফ্রি জয়েন করুন। পছন্দের প্রোডাক্ট লিংক ফেসবুক, টিকটক বা ইউটিউবে শেয়ার করুন এবং প্রতিটি সফল ডেলিভারিতে ১০% কমিশন আয় করুন।';
+const title = 'Galiver Affiliates - প্রোডাক্ট শেয়ার করে ৩০% পর্যন্ত কমিশন আয় করুন';
+const description = 'Galiver অ্যাফিলিয়েট প্রোগ্রামে ফ্রি জয়েন করুন। পছন্দের প্রোডাক্ট লিংক ফেসবুক, টিকটক বা ইউটিউবে শেয়ার করুন এবং প্রতিটি সফল ডেলিভারিতে ৩০% পর্যন্ত কমিশন আয় করুন।';
+const ogImage = { url: '/hero-banner.png', width: 1024, height: 572, alt: 'Galiver Affiliates — ৩০% পর্যন্ত কমিশন আয় করুন' };
 
 export const metadata = {
   metadataBase: new URL(siteUrl),
@@ -42,7 +43,7 @@ export const metadata = {
     url: siteUrl,
     title,
     description,
-    images: [{ url: `${storeUrl}/logo.png`, width: 1200, height: 630, alt: 'Galiver Affiliates' }],
+    images: [ogImage],
   },
   twitter: {
     card: 'summary_large_image',
@@ -50,7 +51,7 @@ export const metadata = {
     creator: '@Galiver',
     title,
     description,
-    images: [`${storeUrl}/logo.png`],
+    images: [ogImage.url],
   },
 };
 

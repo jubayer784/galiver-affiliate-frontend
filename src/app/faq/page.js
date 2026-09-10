@@ -7,7 +7,7 @@ export const metadata = {
 const items = [
   ['When is commission credited?', 'After the order is marked Delivered by Galiver.'],
   ['How long does attribution last?', 'The referral cookie lasts 30 days unless a newer valid referral replaces it.'],
-  ['What is the commission rate?', 'The current standard rate is 10% of product value, excluding delivery charges.'],
+  ['What is the commission rate?', 'You earn up to 30% of product value (excluding delivery charges), depending on the product and current campaign.'],
 ];
 
 const faqJsonLd = {
