@@ -58,7 +58,7 @@ export default function Earnings() {
     const response = await fetch(`${apiUrl}/affiliate/payment-request`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token || ''}` }, body: JSON.stringify({ amount: balance, method: requestForm.method }) });
     const data = await response.json();
     if (!response.ok) { setRequestMessage(data.message || 'Payment request পাঠানো যায়নি।'); return; }
-    setRequestMessage('Payment request পাঠানো হয়েছে।');
+    setRequestMessage(`Payment request পাঠানো হয়েছে। Payment ID: ${data.request?.paymentId || '—'}`);
     setBalance(Number(data.walletBalance ?? 0));
     try {
       const savedProfile = JSON.parse(localStorage.getItem('affiliateProfile') || 'null');

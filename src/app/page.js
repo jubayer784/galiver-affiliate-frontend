@@ -73,7 +73,11 @@ export default function Home() {
 .guide-card .step b{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:linear-gradient(145deg,#ff8a3d,#ff6b00);color:#fff;font:700 17px 'Space Grotesk',sans-serif;box-shadow:0 7px 16px rgba(255,107,0,.3)}
 .guide-card .step p{margin:0;font-size:13px;font-weight:600;line-height:1.5;letter-spacing:-.1px}
 .guide-card .button-soft{background:linear-gradient(145deg,#ff8a3d,#ff6b00);color:#fff;font-weight:700;box-shadow:0 8px 18px rgba(255,107,0,.28)}
-@media(max-width:600px){.landing-content{padding-top:16px}.hero-banner{border-radius:12px;margin-bottom:16px}.landing-hero h1{font-size:23px}.wallet-preview-amount{font-size:29px}.payout-stats{grid-template-columns:1fr}.guide-card .step{grid-template-columns:36px 1fr;gap:10px;padding:12px}.guide-card .step b{width:36px;height:36px;font-size:15px}}`}</style>
+.support-cta{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:36px;padding:20px 22px;border-radius:14px;background:#fff6f0;border:1px solid #f5ddd0}
+.support-cta strong{display:block;color:#17231d;font:700 15px Arial,sans-serif}
+.support-cta p{margin:4px 0 0;color:var(--muted);font-size:13px;line-height:1.5}
+.support-cta .button-soft{white-space:nowrap}
+@media(max-width:600px){.landing-content{padding-top:16px}.hero-banner{border-radius:12px;margin-bottom:16px}.landing-hero h1{font-size:23px}.wallet-preview-amount{font-size:29px}.payout-stats{grid-template-columns:1fr}.guide-card .step{grid-template-columns:36px 1fr;gap:10px;padding:12px}.guide-card .step b{width:36px;height:36px;font-size:15px}.support-cta{flex-direction:column;align-items:flex-start;text-align:left;margin-top:26px;padding:18px}.support-cta .button-soft{width:100%;justify-content:center}}`}</style>
 
     <main className="landing-content">
       <section className="landing-hero">
@@ -106,8 +110,13 @@ export default function Home() {
       </section>
 
       <div className="trust-strip"><span><i aria-hidden="true">✓</i> অথেনটিক প্রোডাক্ট</span><span><i aria-hidden="true">☎</i> বাংলা সাপোর্ট</span><span><i aria-hidden="true">🔒</i> নিরাপদ প্ল্যাটফর্ম</span></div>
+
+      <section className="support-cta">
+        <div><strong>কোনো প্রশ্ন আছে?</strong><p>আমাদের সাপোর্ট টিম WhatsApp বা ফোনে আপনাকে সাহায্য করতে প্রস্তুত।</p></div>
+        <Link className="button button-soft" href="/support">সাপোর্টে যোগাযোগ করুন <span aria-hidden="true">→</span></Link>
+      </section>
     </main>
-    <footer className="landing-footer"><span>© {new Date().getFullYear()} Galiver Affiliates</span><span><Link href="/faq">FAQ</Link><Link href="/terms">Terms</Link></span></footer>
+    <footer className="landing-footer"><span>© {new Date().getFullYear()} Galiver Affiliates</span><span><Link href="/terms">Terms</Link><Link href="/support">Support</Link></span></footer>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
   </main>;
 }

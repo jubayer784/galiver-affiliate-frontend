@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import DashboardNav from './DashboardNav';
 import DashboardBottomNav from './DashboardBottomNav';
+import SuspendedNotice from './SuspendedNotice';
 
 const AUTH_ROUTES = ['/dashboard', '/earnings', '/payments', '/orders', '/products', '/profile', '/notifications'];
 const CHROME_ROUTES = [...AUTH_ROUTES, '/support'];
@@ -35,14 +36,15 @@ export default function PortalChrome({ children }) {
     return () => window.removeEventListener('pageshow', checkAuth);
   }, [needsAuth, router]);
 
-  if (needsAuth && !authorized) return null;
-  if (!hasChrome) return children;
+  if (needsAuth && !authorized) return <SuspendedNotice />;
+  if (!hasChrome) return <>{children}<SuspendedNotice /></>;
 
   return (
     <>
       <DashboardNav />
       <div className="portal-body">{children}</div>
       <DashboardBottomNav />
+      <SuspendedNotice />
     </>
   );
 }
