@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import SiteHeader from '@/components/SiteHeader';
+import SupportPopup from '@/components/SupportPopup';
 
 const storeUrl = process.env.NEXT_PUBLIC_STORE_URL || 'https://galiver.shop';
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://affiliate.galiver.shop';
@@ -77,6 +78,7 @@ export default function Home() {
 .support-cta strong{display:block;color:#17231d;font:700 15px Arial,sans-serif}
 .support-cta p{margin:4px 0 0;color:var(--muted);font-size:13px;line-height:1.5}
 .support-cta .button-soft{white-space:nowrap}
+.landing-footer-support{border:0;background:transparent;padding:0;color:inherit;font:inherit;cursor:pointer}
 @media(max-width:600px){.landing-content{padding-top:16px}.hero-banner{border-radius:12px;margin-bottom:16px}.landing-hero h1{font-size:23px}.wallet-preview-amount{font-size:29px}.payout-stats{grid-template-columns:1fr}.guide-card .step{grid-template-columns:36px 1fr;gap:10px;padding:12px}.guide-card .step b{width:36px;height:36px;font-size:15px}.support-cta{flex-direction:column;align-items:flex-start;text-align:left;margin-top:26px;padding:18px}.support-cta .button-soft{width:100%;justify-content:center}}`}</style>
 
     <main className="landing-content">
@@ -113,10 +115,10 @@ export default function Home() {
 
       <section className="support-cta">
         <div><strong>কোনো প্রশ্ন আছে?</strong><p>আমাদের সাপোর্ট টিম WhatsApp বা ফোনে আপনাকে সাহায্য করতে প্রস্তুত।</p></div>
-        <Link className="button button-soft" href="/support">সাপোর্টে যোগাযোগ করুন <span aria-hidden="true">→</span></Link>
+        <SupportPopup className="button button-soft">সাপোর্টে যোগাযোগ করুন <span aria-hidden="true">→</span></SupportPopup>
       </section>
     </main>
-    <footer className="landing-footer"><span>© {new Date().getFullYear()} Galiver Affiliates</span><span><Link href="/terms">Terms</Link><Link href="/support">Support</Link></span></footer>
+    <footer className="landing-footer"><span>© {new Date().getFullYear()} Galiver Affiliates</span><span><Link href="/terms">Terms</Link><SupportPopup className="landing-footer-support">Support</SupportPopup></span></footer>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
   </main>;
 }
