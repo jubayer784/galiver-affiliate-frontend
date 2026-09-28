@@ -19,4 +19,4 @@ jobs:
             git pull
             npm install
             npm run build
-            pm2 restart galiver-affiliate-frontend
+            /root/.nvm/versions/node/v22.22.3/bin/pm2 restart galiver-affiliate-frontend
